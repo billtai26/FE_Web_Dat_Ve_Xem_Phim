@@ -1,31 +1,7 @@
 "use client"
 import React, { useState } from 'react';
-import Image from 'next/image'; // 1. Tối ưu hóa toàn bộ hình ảnh bằng Next.js Image
-
-// Mock Data chuẩn định dạng CyberSoft API
-const mockCinemas = [
-  {
-    maHeThongRap: 'CGV',
-    logo: 'https://movienew.cybersoft.edu.vn/hinhanh/cgv.png',
-    lstCumRap: [
-      { maCumRap: 'cgv-hung-vuong', tenCumRap: 'CGV Hùng Vương Plaza', diaChi: '126 Hùng Vương, Q.5', danhSachPhim: [
-        { maPhim: 101, tenPhim: 'Đào, Phở Và Piano', hinhAnh: 'https://picsum.photos/id/33/100/150', lstLichChieuTheoPhim: ['09:10', '12:30', '15:45', '19:00', '21:30'] }
-      ]},
-      { maCumRap: 'cgv-aeon-binh-tan', tenCumRap: 'CGV Aeon Bình Tân', diaChi: 'Số 1 Đường số 17A, Bình Tân', danhSachPhim: [
-        { maPhim: 102, tenPhim: 'Chuyến Xe Băng Giá', hinhAnh: 'https://picsum.photos/id/44/100/150', lstLichChieuTheoPhim: ['10:00', '14:15', '18:30', '22:00'] }
-      ]}
-    ]
-  },
-  {
-    maHeThongRap: 'BHD',
-    logo: 'https://movienew.cybersoft.edu.vn/hinhanh/bhd-star-cineplex.png',
-    lstCumRap: [
-      { maCumRap: 'bhd-3-thang-2', tenCumRap: 'BHD Star 3 Tháng 2', diaChi: '3C Đường 3/2, Q.10', danhSachPhim: [
-        { maPhim: 101, tenPhim: 'Đào, Phở Và Piano', hinhAnh: 'https://picsum.photos/id/33/100/150', lstLichChieuTheoPhim: ['11:00', '16:00', '20:45'] }
-      ]}
-    ]
-  }
-];
+import Image from 'next/image';
+import { mockCinemas } from '@/store/mockCinemas';
 
 export default function CinemaComplex() {
   const [activeSystem, setActiveSystem] = useState(mockCinemas[0]);
@@ -34,16 +10,18 @@ export default function CinemaComplex() {
   return (
     <section id="cum-rap" className="max-w-7xl mx-auto px-4 py-12">
       <div className="text-center mb-10">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white">HỆ THỐNG CỤM RẠP LỚN</h2>
+        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-wide text-zinc-900 dark:text-white font-['Segoe_UI',BlinkMacSystemFont,'Arial',sans-serif]">
+          HỆ THỐNG CỤM RẠP LỚN
+        </h2>
         <p className="text-zinc-500 mt-2 text-sm sm:text-base">Xem lịch chiếu thuận tiện nhất tại hệ thống rạp yêu thích của bạn</p>
       </div>
 
-      {/* Bố cục 3 Cột của CyberSoft Layout */}
-      {/* 2. Cập nhật thuộc tính chiều cao tối đa sang max-h-125 chuẩn Tailwind v4 */}
-      <div className="bg-white border border-zinc-200 rounded-xl shadow-xs overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-500px dark:bg-zinc-900 dark:border-zinc-800">
+      {/* SỬA ĐỔI 1: Thay thế md:h-[600px] thành md:h-150 theo khuyến nghị tối ưu của Tailwind v4 */}
+      <div className="bg-white border border-zinc-200 rounded-xl shadow-xs overflow-hidden grid grid-cols-1 md:grid-cols-12 md:h-150 dark:bg-zinc-900 dark:border-zinc-800">
         
         {/* Cột 1: Logo hệ thống rạp (MD: 2 Cột) */}
-        <div className="md:col-span-2 border-b md:border-b-0 md:border-r border-zinc-200 p-3 flex md:flex-col items-center justify-start gap-4 overflow-x-auto md:overflow-y-auto dark:border-zinc-800">
+        {/* SỬA ĐỔI 2: Thay thế [scrollbar-width:none] thành scrollbar-none */}
+        <div className="md:col-span-2 border-b md:border-b-0 md:border-r border-zinc-200 p-3 flex md:flex-col items-center justify-start gap-4 overflow-x-auto md:h-full md:overflow-y-auto [&::-webkit-scrollbar]:hidden scrollbar-none dark:border-zinc-800">
           {mockCinemas.map((cinema) => (
             <button
               key={cinema.maHeThongRap}
@@ -53,7 +31,6 @@ export default function CinemaComplex() {
               }}
               className={`p-2 rounded-full border-2 transition-all shrink-0 ${activeSystem.maHeThongRap === cinema.maHeThongRap ? 'border-orange-500 scale-105 bg-orange-50' : 'border-transparent hover:border-zinc-300'}`}
             >
-              {/* Thay thế <img> bằng <Image /> của Next.js */}
               <Image 
                 src={cinema.logo} 
                 alt={cinema.maHeThongRap} 
@@ -65,8 +42,9 @@ export default function CinemaComplex() {
           ))}
         </div>
 
-        {/* Cột 2: Danh sách chi nhánh rạp (MD: 4 Cột - Đã đổi sang max-h-125) */}
-        <div className="md:col-span-4 border-b md:border-b-0 md:border-r border-zinc-200 max-h-125 overflow-y-auto dark:border-zinc-800">
+        {/* Cột 2: Danh sách chi nhánh rạp (MD: 4 Cột) */}
+        {/* SỬA ĐỔI 3: Thay thế [scrollbar-width:none] thành scrollbar-none */}
+        <div className="md:col-span-4 border-b md:border-b-0 md:border-r border-zinc-200 md:h-full overflow-y-auto [&::-webkit-scrollbar]:hidden scrollbar-none dark:border-zinc-800">
           {activeSystem.lstCumRap.map((branch) => (
             <div
               key={branch.maCumRap}
@@ -79,11 +57,11 @@ export default function CinemaComplex() {
           ))}
         </div>
 
-        {/* Cột 3: Phim & Suất Chiếu (MD: 6 Cột - Đã đổi sang max-h-125) */}
-        <div className="md:col-span-6 p-4 max-h-125 overflow-y-auto space-y-6">
+        {/* Cột 3: Phim & Suất Chiếu (MD: 6 Cột) */}
+        {/* SỬA ĐỔI 4: Thay thế [scrollbar-width:none] thành scrollbar-none */}
+        <div className="md:col-span-6 p-4 md:h-full overflow-y-auto space-y-6 [&::-webkit-scrollbar]:hidden scrollbar-none">
           {activeBranch?.danhSachPhim?.map((movie) => (
             <div key={movie.maPhim} className="flex flex-col sm:flex-row gap-4 pb-6 border-b border-zinc-100 last:border-0">
-              {/* Thay thế <img> bằng <Image /> của Next.js */}
               <Image 
                 src={movie.hinhAnh} 
                 alt={movie.tenPhim} 
