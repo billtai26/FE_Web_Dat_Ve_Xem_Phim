@@ -2,7 +2,7 @@
 import React from 'react';
 import { Tabs } from 'antd';
 import { PlayCircleOutlined } from '@ant-design/icons';
-import Image from 'next/image'; // 1. Tối ưu hóa hình ảnh theo chuẩn Next.js
+import Image from 'next/image';
 
 interface Movie {
   maPhim: number;
@@ -25,9 +25,8 @@ export default function MovieList({ movies }: MovieListProps) {
         {filteredMovies.slice(0, 8).map((movie) => (
           <div key={movie.maPhim} className="group relative flex flex-col bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition duration-300 border border-zinc-100 dark:bg-zinc-800 dark:border-zinc-700">
             
-            {/* Ảnh Phim & Overlay (2. Cập nhật aspect-[2/3] thành aspect-2/3) */}
+            {/* Ảnh Phim & Overlay */}
             <div className="relative aspect-2/3 w-full overflow-hidden bg-zinc-200">
-              {/* 3. Thay thế hoàn toàn thẻ <img> bằng <Image /> của Next.js */}
               <Image 
                 src={movie.hinhAnh || 'https://picsum.photos/400/600'} 
                 alt={movie.tenPhim}
@@ -44,7 +43,6 @@ export default function MovieList({ movies }: MovieListProps) {
                 <button className="text-white text-5xl hover:text-orange-500 transition duration-300 mb-3">
                   <PlayCircleOutlined />
                 </button>
-                {/* 4. Sửa lỗi trùng lặp transition-all và transition-transform */}
                 <button className="w-full py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg shadow-md translate-y-4 group-hover:translate-y-0 transition duration-300">
                   MUA VÉ NGAY
                 </button>
@@ -84,11 +82,17 @@ export default function MovieList({ movies }: MovieListProps) {
 
   return (
     <section id="lich-chieu" className="max-w-7xl mx-auto px-4 py-16 sm:py-24">
+      {/* CẬP NHẬT MÀU SẮC CHUẨN THEO YÊU CẦU:
+        - [&_.ant-tabs-tab-btn]:text-black: Đổi chữ mặc định thành MÀU ĐEN ở chế độ giao diện sáng (Light Mode).
+        - dark:[&_.ant-tabs-tab-btn]:text-white: Đổi chữ mặc định thành MÀU TRẮNG khi trình duyệt bật chế độ tối (Dark Mode).
+        - [&_.ant-tabs-tab-active_.ant-tabs-tab-btn]:!text-orange-500: Khi tab được chọn, màu chữ tự chuyển sang cam rực rỡ.
+        - [&_.ant-tabs-ink-bar]:bg-orange-500: Thanh gạch dưới thanh lịch chạy theo màu cam đồng bộ.
+      */}
       <Tabs 
         defaultActiveKey="1" 
         centered 
         items={tabsItems} 
-        className="movie-tabs"
+        className="movie-tabs [&_.ant-tabs-tab-btn]:text-black dark:[&_.ant-tabs-tab-btn]:text-white"
       />
     </section>
   );
