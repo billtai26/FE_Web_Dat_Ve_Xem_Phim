@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Drawer } from 'antd';
 import { MenuOutlined, UserOutlined } from '@ant-design/icons';
 import Link from 'next/link';
+<<<<<<< HEAD
 import { usePathname } from 'next/navigation';
 
 export default function Header() {
@@ -23,6 +24,19 @@ export default function Header() {
     return pathname === href;
   };
 
+=======
+
+export default function Header() {
+  const [open, setOpen] = useState(false);
+
+  const menuItems = [
+    { key: 'lich-chieu', label: <a href="#lich-chieu" className="font-medium hover:text-orange-500 transition-colors">Lịch Chiếu</a> },
+    { key: 'cum-rap', label: <a href="#cum-rap" className="font-medium hover:text-orange-500 transition-colors">Cụm Rạp</a> },
+    { key: 'tin-tuc', label: <a href="#tin-tuc" className="font-medium hover:text-orange-500 transition-colors">Tin Tức</a> },
+    { key: 'ung-dung', label: <a href="#ung-dung" className="font-medium hover:text-orange-500 transition-colors">Ứng Dụng</a> },
+  ];
+
+>>>>>>> e1ea5fcfffafac35ee6649ff8ed5581293d8a64c
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm transition-all dark:bg-zinc-900/95">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -36,6 +50,7 @@ export default function Header() {
         {/* Desktop Menu */}
         <nav className="hidden md:flex space-x-8">
           {menuItems.map(item => (
+<<<<<<< HEAD
             <Link
               key={item.key}
               href={item.href}
@@ -43,6 +58,9 @@ export default function Header() {
             >
               {item.label}
             </Link>
+=======
+            <div key={item.key}>{item.label}</div>
+>>>>>>> e1ea5fcfffafac35ee6649ff8ed5581293d8a64c
           ))}
         </nav>
 
@@ -78,6 +96,7 @@ export default function Header() {
         <div className="flex flex-col space-y-6">
           <nav className="flex flex-col space-y-4">
             {menuItems.map(item => (
+<<<<<<< HEAD
               <Link
                 key={item.key}
                 href={item.href}
@@ -86,6 +105,11 @@ export default function Header() {
               >
                 {item.label}
               </Link>
+=======
+              <div key={item.key} onClick={() => setOpen(false)} className="text-lg">
+                {item.label}
+              </div>
+>>>>>>> e1ea5fcfffafac35ee6649ff8ed5581293d8a64c
             ))}
           </nav>
           <hr className="border-zinc-200" />
